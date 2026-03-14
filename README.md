@@ -4,6 +4,8 @@ FastAPI sample app instrumented with Prometheus metrics and OpenTelemetry tracin
 
 ![Grafana Dashboard](Grafana.png)
 
+[Video Demo](https://www.awesomescreenshot.com/video/50432336?key=f26d57dd81c710716978908f7dc905a5)
+
 **Stack**
 - App: FastAPI + SQLAlchemy + PostgreSQL
 - Metrics: Prometheus + `prometheus-client`
