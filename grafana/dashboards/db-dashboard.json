@@ -1,0 +1,36 @@
+{
+  "title": "Database Performance",
+  "schemaVersion": 36,
+  "panels": [
+    {
+      "type": "timeseries",
+      "title": "DB Query Rate",
+      "gridPos": {
+        "h": 12,
+        "w": 24,
+        "x": 0,
+        "y": 0
+      },
+      "targets": [
+        {
+          "expr": "rate(db_queries_total[1m])"
+        }
+      ]
+    },
+    {
+      "type": "timeseries",
+      "title": "DB Query Latency",
+      "gridPos": {
+        "h": 12,
+        "w": 24,
+        "x": 0,
+        "y": 12
+      },
+      "targets": [
+        {
+          "expr": "histogram_quantile(0.95, rate(db_query_duration_seconds_bucket[1m]))"
+        }
+      ]
+    }
+  ]
+}

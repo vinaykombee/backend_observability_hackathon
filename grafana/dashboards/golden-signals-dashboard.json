@@ -1,0 +1,128 @@
+{
+  "title": "Golden Signals Observability",
+  "schemaVersion": 36,
+  "panels": [
+
+    {
+      "type": "timeseries",
+      "title": "API Traffic (Requests/sec)",
+      "datasource": "Prometheus",
+      "gridPos": { "h": 10, "w": 24, "x": 0, "y": 0 },
+      "targets": [
+        {
+          "expr": "sum(rate(http_requests_total[1m])) by (method, endpoint)",
+          "legendFormat": "{{method}} {{endpoint}}"
+        }
+      ]
+    },
+
+    {
+      "type": "timeseries",
+      "title": "Error Rate",
+      "datasource": "Prometheus",
+      "gridPos": { "h": 8, "w": 8, "x": 0, "y": 10 },
+      "targets": [
+        {
+          "expr": "sum(rate(http_errors_total[1m])) / sum(rate(http_requests_total[1m]))",
+          "legendFormat": "Error Rate"
+        }
+      ]
+    },
+
+    {
+      "type": "timeseries",
+      "title": "P95 Latency",
+      "datasource": "Prometheus",
+      "gridPos": { "h": 8, "w": 8, "x": 8, "y": 10 },
+      "targets": [
+        {
+          "expr": "histogram_quantile(0.95, rate(http_request_duration_seconds_bucket[1m]))",
+          "legendFormat": "P95 Latency"
+        }
+      ]
+    },
+
+    {
+      "type": "timeseries",
+      "title": "P99 Latency",
+      "gridPos": { "h": 8, "w": 8, "x": 16, "y": 10 },
+      "targets": [
+        {
+          "expr": "histogram_quantile(0.99, rate(http_request_duration_seconds_bucket[1m]))",
+          "legendFormat": "P99 Latency"
+        }
+      ]
+    },
+
+    {
+      "type": "timeseries",
+      "title": "CPU Usage",
+      "datasource": "Prometheus",
+      "gridPos": { "h": 8, "w": 12, "x": 0, "y": 18 },
+      "targets": [
+        {
+          "expr": "rate(process_cpu_seconds_total[1m])",
+          "legendFormat": "CPU Usage"
+        }
+      ]
+    },
+
+    {
+      "type": "timeseries",
+      "title": "Memory Usage",
+      "datasource": "Prometheus",
+      "gridPos": { "h": 8, "w": 12, "x": 12, "y": 18 },
+      "targets": [
+        {
+          "expr": "process_resident_memory_bytes",
+          "legendFormat": "Memory"
+        }
+      ]
+    },
+
+    {
+      "type": "timeseries",
+      "title": "DB Query Rate",
+      "datasource": "Prometheus",
+      "gridPos": { "h": 8, "w": 24, "x": 0, "y": 26 },
+      "targets": [
+        {
+          "expr": "sum(rate(db_queries_total[1m])) by (query_type)",
+          "legendFormat": "{{query_type}}"
+        }
+      ]
+    },
+
+    {
+      "type": "timeseries",
+      "title": "DB Query Latency",
+      "gridPos": { "h": 8, "w": 24, "x": 0, "y": 34 },
+      "targets": [
+        {
+          "expr": "histogram_quantile(0.95, sum(rate(db_query_latency_seconds_bucket[1m])) by (le))",
+          "legendFormat": "P95 DB Latency"
+        }
+      ]
+    },
+
+    {
+      "type": "logs",
+      "title": "Live Logs",
+      "datasource": "Loki",
+      "gridPos": { "h": 10, "w": 24, "x": 0, "y": 42 },
+      "targets": [
+        {
+          "expr": "{job=\"fastapi\"}"
+        }
+      ]
+    },
+
+    {
+      "type": "traces",
+      "title": "Trace Viewer",
+      "datasource": "Tempo",
+      "gridPos": { "h": 10, "w": 24, "x": 0, "y": 52 }
+    }
+
+  ]
+}
