@@ -2,7 +2,7 @@
 
 FastAPI sample app instrumented with Prometheus metrics and OpenTelemetry tracing, plus a local observability stack (Prometheus, Grafana, Loki, Tempo, Promtail) via Docker Compose.
 
-![Grafana Dashboard](grafana.png)
+![Grafana Dashboard](Grafana.png)
 
 **Stack**
 - App: FastAPI + SQLAlchemy + PostgreSQL
